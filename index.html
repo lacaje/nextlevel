@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Next Level - La Caje Events</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+  <div class="overlay">
+
+    <div class="content">
+
+      <h1 class="title">NEXT LEVEL</h1>
+
+      <h2 class="subtitle">Loft Padova</h2>
+
+      <p class="details">6 Dicembre 2025 | 22:00</p>
+
+      <p class="dj">DJ BOMPA</p>
+
+
+
+      <form id="partyForm">
+
+        <input type="text" name="Nome" placeholder="Nome" required />
+
+        <input type="text" name="Cognome" placeholder="Cognome" required />
+
+        <input type="number" name="Anno di nascita" placeholder="Anno di nascita" required />
+
+        <input type="tel" name="Telefono" placeholder="Numero di telefono" required />
+
+        <input type="text" name="Instagram" placeholder="Profilo Instagram" />
+
+        <button type="submit">Iscriviti alla Lista</button>
+
+      </form>
+
+
+
+      <p id="msg"></p>
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+
+    const scriptURL = 'INSERISCI_QUI_L_URL_DEL_TUO_SCRIPT_GOOGLE';
+
+    const form = document.getElementById('partyForm');
+
+    const msg = document.getElementById('msg');
+
+
+
+    form.addEventListener('submit', e => {
+
+      e.preventDefault();
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+
+        .then(response => {
+
+          msg.textContent = "✅ Iscrizione completata! Ci vediamo al Next Level!";
+
+          form.reset();
+
+        })
+
+        .catch(error => {
+
+          msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
+
+          console.error('Errore!', error.message);
+
+        });
+
+    });
+
+  </script>
+
+</body>
+
+</html>
