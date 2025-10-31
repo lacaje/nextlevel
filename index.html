@@ -11,6 +11,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <title>Next Level - La Caje Events</title>
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -22,7 +23,6 @@
       <p class="details">6 Dicembre 2025 | 22:00</p>
       <p class="dj">DJ BOMPA</p>
 
-      <!-- FORM -->
       <form name="submit-to-google-sheet" id="form">
         <input name="Nome" type="text" placeholder="Nome" required />
         <input name="Cognome" type="text" placeholder="Cognome" required />
@@ -36,48 +36,45 @@
     </div>
   </div>
 
-  <script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbwaUJhjdE7gecLGRAHRbwnhXRv-aj5U0eLcEZaCtbx3eovqj5bs0AzcElDCN7IOl_JqzA/exec";
-  const form = document.forms['submit-to-google-sheet'];
-  const msg = document.getElementById("msg");
-  const btn = document.getElementById("btn");
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbwaUJhjdE7gecLGRAHRbwnhXRv-aj5U0eLcEZaCtbx3eovqj5bs0AzcElDCN7IOl_JqzA/exec";
+const form = document.forms['submit-to-google-sheet'];
+const msg = document.getElementById("msg");
+const btn = document.getElementById("btn");
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    // blocca doppio invio
-    btn.disabled = true;
-    btn.textContent = "Invio...";
-    btn.style.opacity = "0.6";
+  // blocca doppio invio
+  btn.disabled = true;
+  btn.textContent = "Invio...";
+  btn.style.opacity = "0.6";
 
-    fetch(scriptURL, {
-      method: "POST",
-      body: new FormData(form)
-    })
-    .then(response => {
-      if (!response.ok) throw new Error("Errore di rete");
-      return response.text();
-    })
-    .then(() => {
-      msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
-      msg.style.color = "limegreen";
-
-      form.reset();
-
-      // disabilita form dopo submit
-      Array.from(form.elements).forEach(el => el.disabled = true);
-      btn.textContent = "Già iscritto";
-    })
-    .catch(error => {
-      msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
-      msg.style.color = "red";
-
-      btn.disabled = false;
-      btn.textContent = "Riprova";
-      btn.style.opacity = "1";
-      console.error(error);
-    });
+  fetch(scriptURL, {
+    method: "POST",
+    body: new FormData(form)
+  })
+  .then(response => {
+    if (!response.ok) throw new Error("Errore di rete");
+    return response.text();
+  })
+  .then(() => {
+    msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
+    msg.style.color = "limegreen";
+    form.reset();
+    Array.from(form.elements).forEach(el => el.disabled = true);
+    btn.textContent = "Già iscritto";
+  })
+  .catch(error => {
+    msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
+    msg.style.color = "red";
+    btn.disabled = false;
+    btn.textContent = "Riprova";
+    btn.style.opacity = "1";
+    console.error(error);
   });
-  </script>
+});
+</script>
+
 </body>
 </html>
