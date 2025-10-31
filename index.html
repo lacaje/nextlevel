@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Next Level - La Caje Events</title>
-
-  <!-- Font Orbitron -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
-
+  <link rel="stylesheet" href="style.css" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
     body {
       margin: 0;
       padding: 0;
@@ -108,7 +107,6 @@
     }
   </style>
 </head>
-
 <body>
   <div class="overlay">
     <div class="content">
@@ -131,24 +129,28 @@
   </div>
 
   <script>
-    // URL aggiornato del tuo script Google Apps Script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbweAWK106cXS4wFQ0EKbLvFSeK3XvOLflnl3GwUY-R20wCrYBgAV7wTBPqto64w_2mDig/exec';
+    const scriptURL = 'INSERISCI_LA_TUA_URL_DI_DEPLOY'; // <--- qui metti il tuo URL di Google Script
     const form = document.getElementById('partyForm');
     const msg = document.getElementById('msg');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-        .then(response => {
-          msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
-          msg.style.color = 'limegreen';
-          form.reset();
-        })
-        .catch(error => {
-          msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
-          msg.style.color = 'red';
-          console.error('Errore!', error.message);
-        });
+
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors', // <- aggiunto per far funzionare il form senza blocchi
+        body: new FormData(form)
+      })
+      .then(() => {
+        msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
+        msg.style.color = 'limegreen';
+        form.reset();
+      })
+      .catch(err => {
+        msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
+        msg.style.color = 'red';
+        console.error('Errore!', err);
+      });
     });
   </script>
 </body>
