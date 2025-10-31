@@ -4,8 +4,111 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Next Level - La Caje Events</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- Font Orbitron -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+      height: 100vh;
+      background: linear-gradient(135deg, #11002b, #330066, #00ffcc, #ff00cc);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite alternate;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content {
+      text-align: center;
+      max-width: 450px;
+      padding: 20px;
+    }
+
+    .title {
+      font-size: 3.5em;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #ff00cc, 0 0 20px #00ffff;
+    }
+
+    .subtitle, .details, .dj {
+      margin: 6px 0;
+      font-size: 1.3em;
+      text-shadow: 0 0 5px #fff;
+    }
+
+    form {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      margin: 10px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      outline: none;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      box-shadow: 0 0 5px #000;
+      transition: all 0.3s;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    input:focus {
+      background: rgba(0,0,0,0.8);
+      box-shadow: 0 0 10px #ff00cc, 0 0 10px #00ffff;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 14px;
+      background: #ff00cc;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1em;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff00cc, 0 0 10px #00ffff;
+      transition: all 0.3s ease-in-out;
+    }
+
+    button:hover {
+      box-shadow: 0 0 25px #ff00cc, 0 0 20px #00ffff;
+      transform: scale(1.05);
+    }
+
+    #msg {
+      margin-top: 20px;
+      font-size: 1em;
+      text-shadow: 0 0 5px #fff;
+    }
+  </style>
 </head>
+
 <body>
   <div class="overlay">
     <div class="content">
@@ -17,8 +120,8 @@
       <form id="partyForm">
         <input type="text" name="Nome" placeholder="Nome" required />
         <input type="text" name="Cognome" placeholder="Cognome" required />
-        <input type="number" name="Anno_di_nascita" placeholder="Anno di nascita" required />
-        <input type="tel" name="Telefono" placeholder="Numero di telefono" required />
+        <input type="number" name="Anno_di_nascita" placeholder="Anno di nascita" required min="1900" max="2025"/>
+        <input type="tel" name="Telefono" placeholder="Numero di telefono" required pattern="[0-9]{10,15}" />
         <input type="text" name="Instagram" placeholder="Profilo Instagram" />
         <button type="submit">Iscriviti alla Lista</button>
       </form>
@@ -28,8 +131,8 @@
   </div>
 
   <script>
-    // URL del tuo Google Apps Script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxU9wSG_Qr_DnpMol65cZUTer1JImbeu3hfybrHxXp0HLCa90Z37yFsxIA3uqEY-XfbSg/exec';
+    // URL aggiornato del tuo script Google Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbweAWK106cXS4wFQ0EKbLvFSeK3XvOLflnl3GwUY-R20wCrYBgAV7wTBPqto64w_2mDig/exec';
     const form = document.getElementById('partyForm');
     const msg = document.getElementById('msg');
 
@@ -38,10 +141,12 @@
       fetch(scriptURL, { method: 'POST', body: new FormData(form) })
         .then(response => {
           msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
+          msg.style.color = 'limegreen';
           form.reset();
         })
         .catch(error => {
           msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
+          msg.style.color = 'red';
           console.error('Errore!', error.message);
         });
     });
