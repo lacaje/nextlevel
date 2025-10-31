@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
-  />
-  <meta name="theme-color" content="#11002b" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#11002b">
   <title>Next Level - La Caje Events</title>
-
-  <!-- ✅ Collegamento corretto al CSS -->
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <div class="overlay">
     <div class="content">
       <h1 class="title">NEXT<br>LEVEL</h1>
-      <p class="subtitle">Loft Padova</p>
-      <p class="details">6 Dicembre 2025 | 22:00</p>
+      <p class="subtitle event-info">Loft Padova</p>
+      <p class="details event-info">6 Dicembre 2025 | 22:00</p>
       <p class="dj">DJ BOMPA</p>
 
+      <!-- COUNTDOWN -->
+      <div class="countdown">
+        <div><span id="days">00</span><small>Giorni</small></div>
+        <div><span id="hours">00</span><small>Ore</small></div>
+        <div><span id="minutes">00</span><small>Minuti</small></div>
+        <div><span id="seconds">00</span><small>Secondi</small></div>
+      </div>
+
+      <!-- FORM -->
       <form name="submit-to-google-sheet" id="form">
-        <input name="Nome" type="text" placeholder="Nome" required />
-        <input name="Cognome" type="text" placeholder="Cognome" required />
-        <input name="Anno" type="number" placeholder="Anno di nascita" required />
-        <input name="Telefono" type="tel" placeholder="Numero di telefono" required />
-        <input name="Instagram" type="text" placeholder="Profilo Instagram" />
+        <input name="Nome" type="text" placeholder="Nome" required>
+        <input name="Cognome" type="text" placeholder="Cognome" required>
+        <input name="Anno" type="number" placeholder="Anno di nascita" required>
+        <input name="Telefono" type="tel" placeholder="Numero di telefono" required>
+        <input name="Instagram" type="text" placeholder="Profilo Instagram">
         <button type="submit" id="btn">Iscriviti alla Lista</button>
       </form>
 
@@ -37,49 +37,6 @@
     </div>
   </div>
 
-  <script>
-  // ✅ URL corretto del tuo script Google Apps
-  const scriptURL = "https://script.google.com/macros/s/AKfycbwaUJhjdE7gecLGRAHRbwnhXRv-aj5U0eLcEZaCtbx3eovqj5bs0AzcElDCN7IOl_JqzA/exec";
-  const form = document.forms['submit-to-google-sheet'];
-  const msg = document.getElementById("msg");
-  const btn = document.getElementById("btn");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    // blocca doppio invio
-    btn.disabled = true;
-    btn.textContent = "Invio...";
-    btn.style.opacity = "0.6";
-
-    fetch(scriptURL, {
-      method: "POST",
-      body: new FormData(form)
-    })
-    .then(response => {
-      if (!response.ok) throw new Error("Errore di rete");
-      return response.text();
-    })
-    .then(() => {
-      msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
-      msg.style.color = "limegreen";
-
-      form.reset();
-
-      // disabilita form dopo submit
-      Array.from(form.elements).forEach(el => el.disabled = true);
-      btn.textContent = "Già iscritto";
-    })
-    .catch(error => {
-      msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
-      msg.style.color = "red";
-
-      btn.disabled = false;
-      btn.textContent = "Riprova";
-      btn.style.opacity = "1";
-      console.error(error);
-    });
-  });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
