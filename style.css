@@ -1,102 +1,99 @@
-/* Import font futuristico */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
-/* ===== BODY e SFONDO ===== */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Orbitron', sans-serif;
   color: white;
   height: 100vh;
-  background: linear-gradient(-45deg, #1e003f, #5a00ff, #ff0099, #ffcc00);
+  background: linear-gradient(135deg, #11002b, #330066, #00ffcc, #ff00cc);
   background-size: 400% 400%;
-  animation: gradientMove 15s ease infinite;
-  overflow: hidden;
+  animation: gradientMove 15s ease infinite alternate;
 }
 
 @keyframes gradientMove {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* ===== OVERLAY SFUMATO ===== */
 .overlay {
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* ===== CONTENT ===== */
 .content {
   text-align: center;
   max-width: 450px;
   padding: 20px;
 }
 
-/* ===== TITOLI ===== */
 .title {
-  font-size: 4em;
-  letter-spacing: 5px;
+  font-size: 3.5em;
+  letter-spacing: 6px;
   margin-bottom: 10px;
-  text-shadow: 0 0 10px #ff00cc, 0 0 20px #ff00cc, 0 0 30px #ff33ff;
+  text-shadow: 0 0 10px #ff00cc, 0 0 20px #00ffff;
 }
 
 .subtitle, .details, .dj {
-  margin: 5px 0;
+  margin: 6px 0;
   font-size: 1.3em;
-  text-shadow: 0 0 5px #ff33ff;
+  text-shadow: 0 0 5px #fff;
 }
 
-/* ===== FORM ===== */
 form {
-  margin-top: 20px;
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
 }
 
 input {
-  margin: 8px 0;
+  margin: 10px 0;
   padding: 12px;
   border: none;
-  border-radius: 25px;
+  border-radius: 8px;
   font-size: 1em;
   outline: none;
-  box-shadow: 0 0 8px rgba(255, 0, 204, 0.7);
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.6); /* più scuro per leggibilità */
   color: white;
+  box-shadow: 0 0 5px #000; /* leggero glow nero */
+  transition: all 0.3s;
 }
 
 input::placeholder {
   color: rgba(255,255,255,0.7);
 }
 
-/* ===== PULSANTI ===== */
+input:focus {
+  background: rgba(0,0,0,0.8);
+  box-shadow: 0 0 10px #ff00cc, 0 0 10px #00ffff;
+}
+
 button {
   margin-top: 15px;
-  padding: 12px;
-  background: linear-gradient(45deg, #ff00cc, #ff66ff);
-  color: white;
+  padding: 14px;
+  background: #ff00cc; /* colore uniforme */
   border: none;
-  border-radius: 25px;
+  border-radius: 12px;
   font-size: 1.1em;
+  font-weight: 700;
+  color: white;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px #ff00cc;
+  box-shadow: 0 0 15px #ff00cc, 0 0 10px #00ffff;
+  transition: all 0.3s ease-in-out;
 }
 
 button:hover {
+  box-shadow: 0 0 25px #ff00cc, 0 0 20px #00ffff;
   transform: scale(1.05);
-  box-shadow: 0 0 20px #ff33ff;
 }
 
-/* ===== MESSAGGI ===== */
 #msg {
-  margin-top: 15px;
-  font-size: 0.95em;
-  text-shadow: 0 0 5px #ff33ff;
+  margin-top: 20px;
+  font-size: 1em;
+  text-shadow: 0 0 5px #fff;
 }
