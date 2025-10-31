@@ -84,19 +84,19 @@
     button {
       margin-top: 15px;
       padding: 14px;
-      background: #ff00cc;
+      background: #00ffff;
       border: none;
       border-radius: 12px;
       font-size: 1.1em;
       font-weight: 700;
-      color: white;
+      color: #11002b;
       cursor: pointer;
-      box-shadow: 0 0 15px #ff00cc, 0 0 10px #00ffff;
+      box-shadow: 0 0 15px #00ffff, 0 0 10px #ff00cc;
       transition: all 0.3s ease-in-out;
     }
 
     button:hover {
-      box-shadow: 0 0 25px #ff00cc, 0 0 20px #00ffff;
+      box-shadow: 0 0 25px #00ffff, 0 0 20px #ff00cc;
       transform: scale(1.05);
     }
 
@@ -140,6 +140,9 @@
           msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
           msg.style.color = 'limegreen';
           form.reset();
+          // Blocca il form dopo l'invio
+          Array.from(form.elements).forEach(el => el.disabled = true);
+          form.querySelector('button').textContent = "Già iscritto";
         })
         .catch(error => {
           msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
