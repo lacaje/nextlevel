@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <div class="overlay">
     <div class="content">
       <h1 class="title">NEXT LEVEL</h1>
@@ -18,7 +17,7 @@
       <form id="partyForm">
         <input type="text" name="Nome" placeholder="Nome" required />
         <input type="text" name="Cognome" placeholder="Cognome" required />
-        <input type="number" name="AnnoDiNascita" placeholder="Anno di nascita" required />
+        <input type="number" name="Anno_di_nascita" placeholder="Anno di nascita" required />
         <input type="tel" name="Telefono" placeholder="Numero di telefono" required />
         <input type="text" name="Instagram" placeholder="Profilo Instagram" />
         <button type="submit">Iscriviti alla Lista</button>
@@ -29,26 +28,23 @@
   </div>
 
   <script>
-    // URL del tuo Google Script (deve finire con /exec)
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxP0XiyvmLU9yNxw_SCe7KrjPSNpbxobyNsTlVlO1MmT-pHaElknl1P0VFJPbS3yWgG/exec';
+    // URL del tuo Google Apps Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxU9wSG_Qr_DnpMol65cZUTer1JImbeu3hfybrHxXp0HLCa90Z37yFsxIA3uqEY-XfbSg/exec';
     const form = document.getElementById('partyForm');
     const msg = document.getElementById('msg');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      msg.textContent = "⏳ Invio in corso...";
-
       fetch(scriptURL, { method: 'POST', body: new FormData(form) })
         .then(response => {
-          msg.textContent = "✅ Iscrizione completata! Ci vediamo al Next Level!";
+          msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
           form.reset();
         })
         .catch(error => {
-          msg.textContent = "❌ Errore nell’invio, assicurati che lo script sia pubblico e riprova.";
+          msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
           console.error('Errore!', error.message);
         });
     });
   </script>
-
 </body>
 </html>
