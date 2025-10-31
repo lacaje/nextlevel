@@ -129,28 +129,23 @@
   </div>
 
   <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbweAWK106cXS4wFQ0EKbLvFSeK3XvOLflnl3GwUY-R20wCrYBgAV7wTBPqto64w_2mDig/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxSKOcwYHg0M9guwGJ26_TO6-YEVA9TU8GpqArvoj26K88DcMmwQDXxqJYe85Qstym97A/exec';
     const form = document.getElementById('partyForm');
     const msg = document.getElementById('msg');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-
-      fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors', // permette di inviare il form senza blocchi del browser
-        body: new FormData(form)
-      })
-      .then(() => {
-        msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
-        msg.style.color = 'limegreen';
-        form.reset();
-      })
-      .catch(err => {
-        msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
-        msg.style.color = 'red';
-        console.error('Errore!', err);
-      });
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => {
+          msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
+          msg.style.color = 'limegreen';
+          form.reset();
+        })
+        .catch(error => {
+          msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
+          msg.style.color = 'red';
+          console.error('Errore!', error.message);
+        });
     });
   </script>
 </body>
