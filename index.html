@@ -2,154 +2,77 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+  />
+  <meta name="theme-color" content="#11002b" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
   <title>Next Level - La Caje Events</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Orbitron', sans-serif;
-      color: white;
-      height: 100vh;
-      background: linear-gradient(135deg, #11002b, #330066, #00ffcc, #ff00cc);
-      background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite alternate;
-    }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .overlay {
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .content {
-      text-align: center;
-      max-width: 450px;
-      padding: 20px;
-    }
-
-    .title {
-      font-size: 3.5em;
-      letter-spacing: 6px;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px #ff00cc, 0 0 20px #00ffff;
-    }
-
-    .subtitle, .details, .dj {
-      margin: 6px 0;
-      font-size: 1.3em;
-      text-shadow: 0 0 5px #fff;
-    }
-
-    form {
-      margin-top: 25px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    input {
-      margin: 10px 0;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      outline: none;
-      background: rgba(0,0,0,0.6);
-      color: white;
-      box-shadow: 0 0 5px #000;
-      transition: all 0.3s;
-    }
-
-    input::placeholder {
-      color: rgba(255,255,255,0.7);
-    }
-
-    input:focus {
-      background: rgba(0,0,0,0.8);
-      box-shadow: 0 0 10px #ff00cc, 0 0 10px #00ffff;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 14px;
-      background: #00ffff;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1em;
-      font-weight: 700;
-      color: #11002b;
-      cursor: pointer;
-      box-shadow: 0 0 15px #00ffff, 0 0 10px #ff00cc;
-      transition: all 0.3s ease-in-out;
-    }
-
-    button:hover {
-      box-shadow: 0 0 25px #00ffff, 0 0 20px #ff00cc;
-      transform: scale(1.05);
-    }
-
-    #msg {
-      margin-top: 20px;
-      font-size: 1em;
-      text-shadow: 0 0 5px #fff;
-    }
-  </style>
 </head>
+
 <body>
   <div class="overlay">
     <div class="content">
-      <h1 class="title">NEXT LEVEL</h1>
-      <h2 class="subtitle">Loft Padova</h2>
+      <h1 class="title">NEXT<br>LEVEL</h1>
+      <p class="subtitle">Loft Padova</p>
       <p class="details">6 Dicembre 2025 | 22:00</p>
       <p class="dj">DJ BOMPA</p>
 
-      <form id="partyForm">
-        <input type="text" name="Nome" placeholder="Nome" required />
-        <input type="text" name="Cognome" placeholder="Cognome" required />
-        <input type="number" name="Anno_di_nascita" placeholder="Anno di nascita" required min="1900" max="2025"/>
-        <input type="tel" name="Telefono" placeholder="Numero di telefono" required pattern="[0-9]{10,15}" />
-        <input type="text" name="Instagram" placeholder="Profilo Instagram" />
-        <button type="submit">Iscriviti alla Lista</button>
+      <form name="submit-to-google-sheet" id="form">
+        <input name="Nome" type="text" placeholder="Nome" required />
+        <input name="Cognome" type="text" placeholder="Cognome" required />
+        <input name="Anno" type="number" placeholder="Anno di nascita" required />
+        <input name="Telefono" type="tel" placeholder="Numero di telefono" required />
+        <input name="Instagram" type="text" placeholder="Profilo Instagram" />
+        <button type="submit" id="btn">Iscriviti alla Lista</button>
       </form>
 
-      <p id="msg"></p>
+      <div id="msg"></div>
     </div>
   </div>
 
-  <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxSKOcwYHg0M9guwGJ26_TO6-YEVA9TU8GpqArvoj26K88DcMmwQDXxqJYe85Qstym97A/exec';
-    const form = document.getElementById('partyForm');
-    const msg = document.getElementById('msg');
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbwWIY8DfhfKtVL4dU8ZyUtRx-0un36LTXq9Z-YgnCsm/exec";
+const form = document.forms['submit-to-google-sheet'];
+const msg = document.getElementById("msg");
+const btn = document.getElementById("btn");
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-        .then(response => {
-          msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
-          msg.style.color = 'limegreen';
-          form.reset();
-          // Blocca il form dopo l'invio
-          Array.from(form.elements).forEach(el => el.disabled = true);
-          form.querySelector('button').textContent = "Già iscritto";
-        })
-        .catch(error => {
-          msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
-          msg.style.color = 'red';
-          console.error('Errore!', error.message);
-        });
-    });
-  </script>
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // blocca doppio invio
+  btn.disabled = true;
+  btn.textContent = "Invio...";
+  btn.style.opacity = "0.6";
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: new FormData(form)
+  })
+  .then(() => {
+    msg.textContent = "✅ Iscrizione completata! Ci vediamo il 6 dicembre!";
+    msg.style.color = "limegreen";
+
+    form.reset();
+
+    // disabilita form dopo submit
+    Array.from(form.elements).forEach(el => el.disabled = true);
+    btn.textContent = "Già iscritto";
+  })
+  .catch(error => {
+    msg.textContent = "❌ Errore nell'invio, riprova tra poco.";
+    msg.style.color = "red";
+
+    btn.disabled = false;
+    btn.textContent = "Riprova";
+    btn.style.opacity = "1";
+  });
+});
+</script>
+
 </body>
 </html>
