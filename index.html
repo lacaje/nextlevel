@@ -129,7 +129,7 @@
   </div>
 
   <script>
-    const scriptURL = 'INSERISCI_LA_TUA_URL_DI_DEPLOY'; // <--- qui metti il tuo URL di Google Script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbweAWK106cXS4wFQ0EKbLvFSeK3XvOLflnl3GwUY-R20wCrYBgAV7wTBPqto64w_2mDig/exec';
     const form = document.getElementById('partyForm');
     const msg = document.getElementById('msg');
 
@@ -138,7 +138,7 @@
 
       fetch(scriptURL, {
         method: 'POST',
-        mode: 'no-cors', // <- aggiunto per far funzionare il form senza blocchi
+        mode: 'no-cors', // permette di inviare il form senza blocchi del browser
         body: new FormData(form)
       })
       .then(() => {
