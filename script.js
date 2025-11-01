@@ -1,34 +1,33 @@
-// ==================== COUNTDOWN ====================
+// COUNTDOWN
 const targetDate = new Date("December 6, 2025 22:00:00").getTime();
 
 function updateCountdown() {
   const now = new Date().getTime();
   const distance = targetDate - now;
 
-  if (distance < 0) {
-    document.getElementById("days").innerText = "00";
-    document.getElementById("hours").innerText = "00";
-    document.getElementById("minutes").innerText = "00";
-    document.getElementById("seconds").innerText = "00";
-    return;
-  }
+  if (distance < 0) return;
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  document.getElementById("days").innerText =
+    Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2,'0');
 
-  document.getElementById("days").innerText = days.toString().padStart(2, '0');
-  document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-  document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-  document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+  document.getElementById("hours").innerText =
+    Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      .toString().padStart(2,'0');
+
+  document.getElementById("minutes").innerText =
+    Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+      .toString().padStart(2,'0');
+
+  document.getElementById("seconds").innerText =
+    Math.floor((distance % (1000 * 60)) / 1000)
+      .toString().padStart(2,'0');
 }
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
 
-// ==================== FORM SUBMISSION ====================
+// FORM + GOOGLE SHEET
 const scriptURL = "https://script.google.com/macros/s/AKfycbwaUJhjdE7gecLGRAHRbwnhXRv-aj5U0eLcEZaCtbx3eovqj5bs0AzcElDCN7IOl_JqzA/exec";
 const form = document.forms['submit-to-google-sheet'];
 const msg = document.getElementById("msg");
@@ -43,21 +42,20 @@ form.addEventListener('submit', e => {
   }
 
   fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-    .then(response => {
-      msg.innerText = "✅ Grazie! Ora selezioneremo le persone. In caso di conferma verrai contattato.";
-      msg.style.color = "#00ff88";
-      showFireworks();
-      form.reset();
-    })
-    .catch(error => {
-      msg.innerText = "❌ Errore durante l’invio. Riprova più tardi.";
-      msg.style.color = "#ff4444";
-      console.error('Error!', error.message);
-    });
+  .then(res => {
+    msg.innerText = "✅ Grazie! Se verrai selezionato ti contatteremo.";
+    msg.style.color = "#00ff88";
+    showFireworks();
+    form.reset();
+  })
+  .catch(err => {
+    msg.innerText = "❌ Errore. Riprova più tardi.";
+    msg.style.color = "#ff4444";
+  });
 });
 
 
-// ==================== FIREWORKS EFFECT ====================
+// FIREWORKS
 function showFireworks() {
   const container = document.querySelector('.content');
   for (let i = 0; i < 30; i++) {
@@ -69,8 +67,6 @@ function showFireworks() {
     star.style.background = ["#00ffff", "#ff00cc", "#00ff88"][Math.floor(Math.random() * 3)];
     container.appendChild(star);
 
-    setTimeout(() => {
-      star.remove();
-    }, 900 + Math.random() * 500);
+    setTimeout(() => star.remove(), 900 + Math.random() * 500);
   }
 }

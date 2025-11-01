@@ -1,48 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
-/* ===== RESET ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ===== STRUTTURA BASE ===== */
 html, body {
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  min-height: 100dvh; /* risolve righe bianche su iPhone e Android */
-  color: white;
+  min-height: 100dvh;
   font-family: 'Orbitron', sans-serif;
+  color: white;
 
   background: linear-gradient(135deg, #120027, #330066, #00dfc6, #ff00cc);
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite alternate;
 
   overflow-x: hidden;
-  overflow-y: auto;
-
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-attachment: fixed;
   -webkit-overflow-scrolling: touch;
 
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
            env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-/* ===== ANIMAZIONE SFONDO ===== */
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+body {
+  background-color: #120027;
 }
 
-/* ===== OVERLAY CENTRALE ===== */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
 .overlay {
   width: 100%;
-  min-height: 100dvh;
+  min-height: 100vh;
   background: rgba(0,0,0,0.45);
   display: flex;
   justify-content: center;
@@ -52,7 +46,6 @@ html, body {
   padding: 40px 20px;
 }
 
-/* ===== CONTENUTO ===== */
 .content {
   max-width: 420px;
   width: 100%;
@@ -60,7 +53,6 @@ html, body {
 
 .title {
   font-size: 3.6em;
-  line-height: 1.2;
   letter-spacing: 7px;
   margin-bottom: 12px;
   color: #fff;
@@ -69,16 +61,6 @@ html, body {
     0 0 20px #ff00cc,
     0 0 40px #00ffff,
     0 0 60px #00ffff;
-  transition: all 0.3s ease-in-out;
-}
-
-.title:hover {
-  text-shadow:
-    0 0 15px #00ffff,
-    0 0 25px #00ffff,
-    0 0 45px #ff00cc,
-    0 0 70px #ff00cc;
-  transform: scale(1.03);
 }
 
 .subtitle, .details, .dj {
@@ -88,43 +70,44 @@ html, body {
     0 0 6px #fff,
     0 0 18px #00ffff,
     0 0 25px #ff00cc;
-  transition: all 0.3s ease-in-out;
-}
-
-.subtitle:hover, .details:hover, .dj:hover {
-  transform: scale(1.05);
-  color: #00ffff;
 }
 
 /* ===== COUNTDOWN ===== */
-.countdown {
-  margin: 25px 0;
+#countdown {
   display: flex;
   justify-content: center;
   gap: 15px;
+  margin-top: 25px;
 }
 
-.count-box {
-  background: rgba(0,0,0,0.45);
-  border-radius: 10px;
-  padding: 15px 12px;
-  text-align: center;
+.time {
+  background: rgba(0,0,0,0.5);
+  padding: 12px 10px;
   min-width: 65px;
+  border-radius: 12px;
+  text-align: center;
   box-shadow:
     0 0 10px rgba(0,255,255,0.4),
     inset 0 0 12px rgba(255,0,255,0.3);
+  animation: glow 2.5s ease infinite alternate;
 }
 
-.count-box span {
+.time span {
   display: block;
-  font-size: 1.8em;
-  font-weight: 700;
+  font-size: 1.7em;
+  font-weight: bold;
   color: #00ffff;
 }
 
-.count-box label {
+.time label {
   font-size: 0.75em;
-  color: #ccc;
+  opacity: 0.8;
+  color: #ddd;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 10px #00ffff; }
+  100% { box-shadow: 0 0 20px #ff00cc; }
 }
 
 /* ===== FORM ===== */
@@ -145,25 +128,8 @@ input {
   font-size: 1em;
   background: rgba(0,0,0,0.55);
   color: white;
-  transition: all 0.25s;
-  box-shadow:
-    0 0 6px rgba(0,0,0,0.8),
-    inset 0 0 10px rgba(0,255,255,0.2);
 }
 
-input::placeholder {
-  color: rgba(255,255,255,0.6);
-}
-
-input:focus {
-  background: rgba(0,0,0,0.8);
-  box-shadow:
-    0 0 10px #ff00cc,
-    0 0 15px #00ffff,
-    0 0 25px #00ffff;
-}
-
-/* ===== BUTTON ===== */
 button {
   margin-top: 18px;
   padding: 15px 25px;
@@ -174,62 +140,25 @@ button {
   font-weight: 700;
   color: #13002d;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  box-shadow:
-    0 0 10px #00ffff,
-    0 0 25px #00ffff,
-    0 0 35px #ff00cc;
 }
 
-button:hover {
-  transform: scale(1.07);
-  box-shadow:
-    0 0 15px #00ffff,
-    0 0 30px #00ffff,
-    0 0 45px #ff00cc;
-}
-
-/* ===== MESSAGGIO ===== */
 #msg {
   margin-top: 20px;
-  font-size: 1em;
-  text-shadow: 0 0 6px #fff;
   min-height: 20px;
 }
 
-/* ===== STELLINE / FUOCHI D'ARTIFICIO ===== */
-.star {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0;
-  animation: sparkle 1s ease-out forwards;
-}
+/* ===== Fireworks ===== */
 
+.star {position:absolute;border-radius:50%;opacity:0;animation:sparkle 1s ease-out forwards;}
 @keyframes sparkle {
-  0% {
-    opacity: 1;
-    transform: scale(0.8) translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.3) translateY(-30px);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0) translateY(-50px);
-  }
+  0% {opacity:1;transform:scale(.8) translateY(0);}
+  50% {opacity:1;transform:scale(1.3) translateY(-30px);}
+  100% {opacity:0;transform:scale(0) translateY(-50px);}
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 480px) {
-  .title {
-    font-size: 2.7em;
-  }
-  .count-box {
-    padding: 12px 8px;
-    min-width: 55px;
-  }
-  .count-box span {
-    font-size: 1.5em;
+@media (max-width:480px){
+  .time {
+    min-width:50px;
+    padding:8px 6px;
   }
 }
