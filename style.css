@@ -5,13 +5,21 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  min-height: 100dvh; /* usa l'altezza dinamica vera */
   overflow-x: hidden;
-  font-family: 'Orbitron', sans-serif;
   background: linear-gradient(135deg, #120027, #330066, #00dfc6, #ff00cc);
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite alternate;
+  font-family: 'Orbitron', sans-serif;
   color: white;
+}
+
+/* assicurati che l’area di visualizzazione copra i safe area inset (iPhone) */
+body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+  box-sizing: border-box;
 }
 
 @keyframes gradientMove {
@@ -23,13 +31,14 @@ html, body {
 /* ===== LAYOUT ===== */
 .overlay {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh; /* garantisce copertura totale sul telefono */
   background: rgba(0,0,0,0.45);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
   box-sizing: border-box;
+  overflow-y: auto; /* abilita lo scroll verticale se serve */
 }
 
 .content {
