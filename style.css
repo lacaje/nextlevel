@@ -1,20 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
-/* RESET BASE */
+/* ===== BASE ===== */
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  width: 100%;
+  min-height: 100%;
   overflow-x: hidden;
   font-family: 'Orbitron', sans-serif;
-  background-color: #11002b;
-}
-
-/* ANIMAZIONE GRADIENT */
-body {
   background: linear-gradient(135deg, #120027, #330066, #00dfc6, #ff00cc);
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite alternate;
+  color: white;
 }
 
 @keyframes gradientMove {
@@ -23,68 +20,43 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* OVERLAY CENTRATO */
+/* ===== LAYOUT ===== */
 .overlay {
   width: 100%;
-  height: 100vh; /* altezza piena viewport */
-  background: rgba(0,0,0,0.4);
+  min-height: 100vh;
+  background: rgba(0,0,0,0.45);
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  overflow: hidden;
+  padding: 60px 20px;
+  box-sizing: border-box;
 }
 
-/* PARTICELLE NEON SULLO SFONDO */
-.sparkle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: cyan;
-  opacity: 0;
-  animation: sparkleAnim 3s infinite;
-}
-
-@keyframes sparkleAnim {
-  0% { opacity: 0; transform: translate(0,0) scale(0.5); }
-  50% { opacity: 1; }
-  100% { opacity: 0; transform: translate(10px,-10px) scale(1); }
-}
-
-/* CONTENUTO CENTRALE */
 .content {
-  text-align: center;
   max-width: 450px;
-  padding: 20px;
-  z-index: 2;
+  text-align: center;
+  position: relative;
 }
 
-/* TITOLI NEON */
+/* ===== TITOLI ===== */
 .title {
   font-size: 3.5em;
   line-height: 1.2;
-  letter-spacing: 7px;
-  margin-bottom: 10px;
-  color: #fff;
-  text-shadow:
-    0 0 10px #ff00cc,
-    0 0 20px #ff00cc,
-    0 0 40px #00ffff,
-    0 0 50px #00ffff;
+  letter-spacing: 6px;
+  margin-bottom: 15px;
+  text-shadow: 0 0 10px #ff00cc, 0 0 20px #00ffff, 0 0 40px #00ffff;
   animation: neonFlicker 3s infinite alternate;
 }
 
 @keyframes neonFlicker {
-  0%,100% { text-shadow: 0 0 10px #ff00cc,0 0 20px #ff00cc,0 0 40px #00ffff,0 0 50px #00ffff; }
-  50% { text-shadow: 0 0 15px #ff00cc,0 0 30px #ff00cc,0 0 50px #00ffff,0 0 60px #00ffff; }
+  0%, 100% { text-shadow: 0 0 10px #ff00cc, 0 0 20px #00ffff, 0 0 40px #00ffff; }
+  50% { text-shadow: 0 0 20px #ff00cc, 0 0 30px #00ffff, 0 0 50px #00ffff; }
 }
 
 .subtitle, .details, .dj {
+  font-size: 1.3em;
   margin: 6px 0;
-  font-size: 1.35em;
-  color: #fff;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
 .subtitle:hover, .details:hover {
@@ -92,7 +64,19 @@ body {
   transform: translateY(-2px);
 }
 
-/* FORM */
+/* ===== COUNTDOWN ===== */
+#countdown {
+  margin: 25px auto;
+  font-size: 1.5em;
+  background: rgba(0,0,0,0.5);
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00cc;
+  letter-spacing: 2px;
+  display: inline-block;
+}
+
+/* ===== FORM ===== */
 form {
   margin-top: 30px;
   display: flex;
@@ -102,15 +86,13 @@ form {
 input {
   margin: 10px 0;
   padding: 15px;
-  border: 2px solid rgba(0,255,255,0.3);
+  border: none;
   border-radius: 10px;
-  font-size: 1em;
   background: rgba(0,0,0,0.55);
   color: white;
-  transition: all 0.25s;
-  box-shadow:
-    0 0 6px rgba(0,0,0,0.8),
-    inset 0 0 10px rgba(0,255,255,0.2);
+  font-size: 1em;
+  transition: 0.3s;
+  box-shadow: inset 0 0 10px rgba(0,255,255,0.3);
 }
 
 input::placeholder {
@@ -118,14 +100,10 @@ input::placeholder {
 }
 
 input:focus {
-  border-color: #00ffff;
-  box-shadow:
-    0 0 10px #ff00cc,
-    0 0 10px #00ffff,
-    0 0 30px #00ffff;
+  box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00cc, inset 0 0 10px #00ffff;
 }
 
-/* BOTTONE */
+/* ===== BUTTON ===== */
 button {
   margin-top: 18px;
   padding: 15px;
@@ -137,38 +115,56 @@ button {
   color: #13002d;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  box-shadow:
-    0 0 10px #00ffff,
-    0 0 25px #00ffff,
-    0 0 35px #ff00cc;
+  box-shadow: 0 0 15px #00ffff, 0 0 30px #ff00cc;
 }
 
 button:hover {
-  transform: scale(1.07) translateY(-2px);
-  box-shadow:
-    0 0 15px #00ffff,
-    0 0 30px #00ffff,
-    0 0 45px #ff00cc;
+  transform: scale(1.07);
+  box-shadow: 0 0 20px #00ffff, 0 0 35px #ff00cc;
 }
 
-/* MESSAGGIO DI CONFERMA */
+/* ===== MSG ===== */
 #msg {
   margin-top: 20px;
-  font-size: 1em;
+  font-size: 1.1em;
   color: limegreen;
-  text-shadow: 0 0 6px #fff;
 }
 
-/* TIMER */
-#countdown {
-  margin-top: 20px;
-  font-size: 1.7em;
-  padding: 10px 20px;
-  display: inline-block;
-  background: rgba(0,0,0,0.5);
-  border-radius: 12px;
-  letter-spacing: 2px;
-  box-shadow:
-    0 0 6px #00ffff,
-    0 0 12px #ff00cc;
+/* ===== NOTE ===== */
+.note {
+  margin-top: 10px;
+  font-size: 0.85em;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ===== FIREWORKS ===== */
+.star {
+  position: absolute;
+  background: #00ffff;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: sparkle 0.8s ease-out forwards;
+}
+
+@keyframes sparkle {
+  0% { transform: scale(0); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 500px) {
+  .title {
+    font-size: 2.6em;
+  }
+
+  #countdown {
+    font-size: 1.1em;
+    padding: 8px 14px;
+  }
+
+  input, button {
+    font-size: 0.95em;
+    padding: 12px;
+  }
 }
