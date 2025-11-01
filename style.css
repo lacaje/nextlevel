@@ -1,25 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
 
 /* ===== BASE ===== */
-html, body {
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
   width: 100%;
   height: 100%;
-  min-height: 100dvh; /* usa l'altezza dinamica vera */
+  min-height: 100dvh;
   overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Orbitron', sans-serif;
   background: linear-gradient(135deg, #120027, #330066, #00dfc6, #ff00cc);
   background-size: 400% 400%;
   animation: gradientMove 12s ease infinite alternate;
-  font-family: 'Orbitron', sans-serif;
   color: white;
+
+  /* forza il background su tutta la viewport anche su Safari */
+  background-attachment: fixed;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* assicurati che l’area di visualizzazione copra i safe area inset (iPhone) */
+/* corregge lo spazio dovuto ai safe-area su iPhone */
 body {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-           env(safe-area-inset-bottom) env(safe-area-inset-left);
-  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: #120027; /* fallback solido */
 }
 
 @keyframes gradientMove {
@@ -31,14 +41,14 @@ body {
 /* ===== LAYOUT ===== */
 .overlay {
   width: 100%;
-  min-height: 100dvh; /* garantisce copertura totale sul telefono */
+  min-height: 100dvh;
   background: rgba(0,0,0,0.45);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   padding: 60px 20px;
-  box-sizing: border-box;
-  overflow-y: auto; /* abilita lo scroll verticale se serve */
+  overflow-y: auto;
 }
 
 .content {
