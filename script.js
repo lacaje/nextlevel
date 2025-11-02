@@ -1,4 +1,4 @@
-// COUNTDOWN
+// ==================== COUNTDOWN ====================
 const targetDate = new Date("December 6, 2025 22:00:00").getTime();
 
 function updateCountdown() {
@@ -27,7 +27,17 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 
-// FORM + GOOGLE SHEET
+// ==================== IMBATTIBILE ANTI-DUPLICATO ====================
+if (localStorage.getItem("registered") === "yes") {
+  document.getElementById("form").innerHTML = `
+    <p style="color:#00ff88; font-size:1.1em;">
+      ✅ Sei già iscritto alla lista!
+    </p>
+  `;
+}
+
+
+// ==================== FORM ====================
 const scriptURL = "https://script.google.com/macros/s/AKfycbwaUJhjdE7gecLGRAHRbwnhXRv-aj5U0eLcEZaCtbx3eovqj5bs0AzcElDCN7IOl_JqzA/exec";
 const form = document.forms['submit-to-google-sheet'];
 const msg = document.getElementById("msg");
@@ -42,11 +52,31 @@ form.addEventListener('submit', e => {
   }
 
   fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-  .then(res => {
+  .then(res => res.text())
+  .then(text => {
+    
+    // === RISPOSTA SERVER: DUPLICATO ===
+    if (text === "duplicate") {
+      msg.innerText = "⚠️ Sei già iscritto alla lista!";
+      msg.style.color = "#ffaa00";
+      localStorage.setItem("registered", "yes");
+      form.reset();
+      return;
+    }
+
+    // === RISPOSTA SERVER: OK ===
     msg.innerText = "✅ Grazie! Se verrai selezionato ti contatteremo.";
     msg.style.color = "#00ff88";
     showFireworks();
     form.reset();
+    localStorage.setItem("registered", "yes");
+
+    // rimuovi il form
+    document.getElementById("form").innerHTML = `
+      <p style="color:#00ff88; font-size:1.1em;">
+        ✅ Iscrizione completata!
+      </p>
+    `;
   })
   .catch(err => {
     msg.innerText = "❌ Errore. Riprova più tardi.";
@@ -55,7 +85,7 @@ form.addEventListener('submit', e => {
 });
 
 
-// FIREWORKS
+// ==================== FIREWORKS ====================
 function showFireworks() {
   const container = document.querySelector('.content');
   for (let i = 0; i < 30; i++) {
