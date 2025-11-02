@@ -27,7 +27,7 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 
-// ==================== IMBATTIBILE ANTI-DUPLICATO ====================
+// ==================== ANTI-DUPLICATO LOCALE ====================
 if (localStorage.getItem("registered") === "yes") {
   document.getElementById("form").innerHTML = `
     <p style="color:#00ff88; font-size:1.1em;">
@@ -38,50 +38,57 @@ if (localStorage.getItem("registered") === "yes") {
 
 
 // ==================== FORM ====================
-const scriptURL = "https://script.google.com/macros/s/AKfycbwaUJhjdE7gecLGRAHRbwnhXRv-aj5U0eLcEZaCtbx3eovqj5bs0AzcElDCN7IOl_JqzA/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbwWIY8DfhfKtVL4dU8ZyUtRx-0un36LTXq9Z-YgnCsm/dev";
 const form = document.forms['submit-to-google-sheet'];
 const msg = document.getElementById("msg");
 
 form.addEventListener('submit', e => {
   e.preventDefault();
 
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  submitButton.innerText = "Invio in corso...";
+
   const year = form.Anno.value;
   if (year < 1900 || year > 2025) {
     form.Anno.style.boxShadow = "0 0 10px red, 0 0 20px red";
+    submitButton.disabled = false;
+    submitButton.innerText = "Iscriviti alla Lista d’Attesa";
     return;
   }
 
   fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-  .then(res => res.text())
-  .then(text => {
-    
-    // === RISPOSTA SERVER: DUPLICATO ===
-    if (text === "duplicate") {
-      msg.innerText = "⚠️ Sei già iscritto alla lista!";
-      msg.style.color = "#ffaa00";
-      localStorage.setItem("registered", "yes");
+    .then(res => res.text())
+    .then(text => {
+      submitButton.disabled = false;
+      submitButton.innerText = "Iscriviti alla Lista d’Attesa";
+
+      if (text === "duplicate") {
+        msg.innerText = "⚠️ Sei già iscritto alla lista!";
+        msg.style.color = "#ffaa00";
+        localStorage.setItem("registered", "yes");
+        form.reset();
+        return;
+      }
+
+      msg.innerText = "✅ Grazie! Se verrai selezionato ti contatteremo.";
+      msg.style.color = "#00ff88";
+      showFireworks();
       form.reset();
-      return;
-    }
+      localStorage.setItem("registered", "yes");
 
-    // === RISPOSTA SERVER: OK ===
-    msg.innerText = "✅ Grazie! Se verrai selezionato ti contatteremo.";
-    msg.style.color = "#00ff88";
-    showFireworks();
-    form.reset();
-    localStorage.setItem("registered", "yes");
-
-    // rimuovi il form
-    document.getElementById("form").innerHTML = `
-      <p style="color:#00ff88; font-size:1.1em;">
-        ✅ Iscrizione completata!
-      </p>
-    `;
-  })
-  .catch(err => {
-    msg.innerText = "❌ Errore. Riprova più tardi.";
-    msg.style.color = "#ff4444";
-  });
+      document.getElementById("form").innerHTML = `
+        <p style="color:#00ff88; font-size:1.1em;">
+          ✅ Iscrizione completata!
+        </p>
+      `;
+    })
+    .catch(err => {
+      msg.innerText = "❌ Errore. Riprova più tardi.";
+      msg.style.color = "#ff4444";
+      submitButton.disabled = false;
+      submitButton.innerText = "Iscriviti alla Lista d’Attesa";
+    });
 });
 
 
