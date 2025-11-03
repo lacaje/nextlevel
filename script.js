@@ -27,7 +27,7 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 
-// ==================== ANTI-DUPLICATO LOCALE ====================
+// ==================== CONTROLLA DUPLICATI LOCALE ====================
 if (localStorage.getItem("registered") === "yes") {
   document.getElementById("form").innerHTML = `
     <p style="color:#00ff88; font-size:1.1em;">
@@ -45,38 +45,39 @@ const msg = document.getElementById("msg");
 form.addEventListener('submit', e => {
   e.preventDefault();
 
+  // Blocca subito il pulsante
   const submitButton = form.querySelector('button[type="submit"]');
   submitButton.disabled = true;
-  submitButton.innerText = "Invio in corso...";
 
+  // Controllo anno di nascita
   const year = form.Anno.value;
   if (year < 1900 || year > 2025) {
     form.Anno.style.boxShadow = "0 0 10px red, 0 0 20px red";
     submitButton.disabled = false;
-    submitButton.innerText = "Iscriviti alla Lista d’Attesa";
     return;
   }
 
   fetch(scriptURL, { method: 'POST', body: new FormData(form) })
     .then(res => res.text())
     .then(text => {
-      submitButton.disabled = false;
-      submitButton.innerText = "Iscriviti alla Lista d’Attesa";
 
       if (text === "duplicate") {
         msg.innerText = "⚠️ Sei già iscritto alla lista!";
         msg.style.color = "#ffaa00";
         localStorage.setItem("registered", "yes");
         form.reset();
+        submitButton.disabled = false; // se vuoi che possa riprovare con altro numero
         return;
       }
 
+      // Successo
       msg.innerText = "✅ Grazie! Se verrai selezionato ti contatteremo.";
       msg.style.color = "#00ff88";
       showFireworks();
       form.reset();
       localStorage.setItem("registered", "yes");
 
+      // Rimuove il form
       document.getElementById("form").innerHTML = `
         <p style="color:#00ff88; font-size:1.1em;">
           ✅ Iscrizione completata!
@@ -87,7 +88,6 @@ form.addEventListener('submit', e => {
       msg.innerText = "❌ Errore. Riprova più tardi.";
       msg.style.color = "#ff4444";
       submitButton.disabled = false;
-      submitButton.innerText = "Iscriviti alla Lista d’Attesa";
     });
 });
 
